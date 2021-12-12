@@ -31,7 +31,7 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/editTextTextEmailAddress"
+            android:id="@+id/etEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -45,7 +45,7 @@
             android:padding="13dp" />
 
         <EditText
-            android:id="@+id/editTextTextPassword"
+            android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -73,6 +73,7 @@
                 android:textSize="18sp" />
 
             <TextView
+                android:id="@+id/tvSignUp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="3dp"
@@ -90,6 +91,7 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/btn_google"
                 android:layout_width="165dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
@@ -101,6 +103,7 @@
                 android:textSize="18sp" />
 
             <Button
+                android:id="@+id/btn_facebook"
                 android:layout_width="165dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -114,7 +117,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btn_signIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
@@ -128,6 +131,7 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/tvSignUpWithPhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"

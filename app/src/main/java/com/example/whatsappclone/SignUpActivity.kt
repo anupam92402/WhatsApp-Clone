@@ -1,5 +1,6 @@
 package com.example.whatsappclone
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -30,17 +31,35 @@ class SignUpActivity : AppCompatActivity() {
         builder.setTitle("Creating Account")
         builder.setMessage("We are Creating Your Account")
 
+        binding.tvSignIn.setOnClickListener {
+            val intent = Intent(this@SignUpActivity, SignInActivity::class.java)
+            this.finish()
+            startActivity(intent)
+        }
+
         binding.btnSignUp.setOnClickListener {
 
             alertDialog = builder.create()
             alertDialog.setCancelable(false)
-            alertDialog.show()
 
             val userName = binding.etUsername.text.toString()
             val email = binding.etEmail.text.toString()
             val password = binding.etPassword.text.toString()
 
-            signUp(userName, email, password)
+            if (userName.isEmpty() || email.isEmpty() || password.isEmpty()) {
+                if (userName.isEmpty()) {
+                    binding.etUsername.error = "Name can't be empty"
+                }
+                if (email.isEmpty()) {
+                    binding.etEmail.error = "Email Id can't be empty"
+                }
+                if (password.isEmpty()) {
+                    binding.etPassword.error = "Password can't be empty"
+                }
+            } else {
+                alertDialog.show()
+                signUp(userName, email, password)
+            }
 
         }
     }

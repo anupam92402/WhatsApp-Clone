@@ -54,15 +54,19 @@ class SignInActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        //when user tap on google button
-        binding.btnGoogle.setOnClickListener {
-            signIn()
-        }
-
         //setting alert dialog between sign in/sign up task
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Login")
         builder.setMessage("Logging to Your Account")
+
+        //when user tap on google button
+        binding.btnGoogle.setOnClickListener {
+            //displaying the alert dialog
+            alertDialog = builder.create()
+            alertDialog.setCancelable(false)
+            alertDialog.show()
+            signIn()
+        }
 
         //when user trying the sign in
         binding.btnSignIn.setOnClickListener {
@@ -154,6 +158,7 @@ class SignInActivity : AppCompatActivity() {
                     users.userName = currentUser.displayName!!
                     users.profilePic = currentUser.photoUrl.toString()
                     mDbRef.child("Users").child(currentUser.uid).setValue(users)
+                    alertDialog.dismiss()
                     val intent = Intent(this@SignInActivity, MainActivity::class.java)
                     startActivity(intent)
                     this.finish()

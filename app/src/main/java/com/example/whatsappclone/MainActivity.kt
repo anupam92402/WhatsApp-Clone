@@ -7,6 +7,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.whatsappclone.Adapters.FragmentAdapter
 import com.example.whatsappclone.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
 
@@ -21,6 +22,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         auth = FirebaseAuth.getInstance()//getting instance of auth
+
+        binding.viewPager.adapter = FragmentAdapter(supportFragmentManager)
+        binding.tabLayout.setupWithViewPager(binding.viewPager)
     }
 
     //inflating the menu

@@ -23,4 +23,5 @@
     <color name="grayBackground">#BCBCBC</color>
     <color name="darkBlue">#1E3CE1</color>
     <color name="chatBackground">#AAAAAA</color>
+    <color name="grey">#D6D4D4</color>
 </resources>

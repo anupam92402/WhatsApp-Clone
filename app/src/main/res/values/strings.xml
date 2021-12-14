@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">WhatsApp Clone</string>
-    <string name="default_web_client_id1" translatable="false">242278391856-qajsueq4940s69dokb151so00qtihhrn.apps.googleusercontent.com</string>
+    <string name="google">Google</string>
+    <string name="facebook">FaceBook</string>
+    <string name="sign_in">Sign In</string>
+    <string name="signup_with_phone">SignUp with Phone</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="new_to_whatsapp">New to WhatApp?</string>
+    <string name="register">Register</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="username">Username</string>
+    <string name="already_have_an_account">Already have an Account?</string>
 </resources>

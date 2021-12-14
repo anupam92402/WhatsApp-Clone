@@ -18,14 +18,15 @@
         <ImageView
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:src="@drawable/whatsapp_logo" />
+            android:src="@drawable/whatsapp_logo"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:layout_marginTop="40dp"
-            android:text="Sign Up"
+            android:text="@string/sign_up"
             android:textColor="@color/black"
             android:textSize="30sp"
             android:textStyle="bold" />
@@ -40,7 +41,7 @@
             android:drawableStart="@drawable/person"
             android:drawablePadding="5dp"
             android:ems="10"
-            android:hint="Username"
+            android:hint="@string/username"
             android:inputType="textPersonName"
             android:padding="13dp" />
 
@@ -54,7 +55,7 @@
             android:drawableStart="@drawable/email"
             android:drawablePadding="5dp"
             android:ems="10"
-            android:hint="Email"
+            android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:padding="13dp" />
 
@@ -67,17 +68,18 @@
             android:drawableStart="@drawable/password"
             android:drawablePadding="5dp"
             android:ems="10"
-            android:hint="Password"
+            android:hint="@string/password"
             android:inputType="textPassword"
             android:padding="13dp" />
 
         <TextView
-            android:id="@+id/tvSignIn"
+            android:id="@+id/tvRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginTop="5dp"
-            android:text="Already have an Account?"
+            android:text="@string/already_have_an_account"
+            android:textColor="@color/colorPrimary"
             android:textSize="18sp" />
 
         <LinearLayout
@@ -85,31 +87,38 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:gravity="center_horizontal"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="2">
 
             <Button
                 android:id="@+id/btn_google"
-                android:layout_width="165dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
+                android:layout_weight="1"
                 android:backgroundTint="@color/white"
                 android:drawableStart="@drawable/google_logo"
+                android:drawablePadding="5dp"
                 android:padding="10dp"
-                android:text="Google"
+                android:text="@string/google"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                tools:ignore="ButtonStyle" />
 
             <Button
                 android:id="@+id/btn_facebook"
-                android:layout_width="165dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
+                android:layout_weight="1"
                 android:backgroundTint="@color/fb_color"
                 android:drawableStart="@drawable/facebook_logo"
+                android:drawablePadding="5dp"
                 android:padding="10dp"
-                android:text="FaceBook"
+                android:text="@string/facebook"
                 android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                tools:ignore="ButtonStyle" />
 
         </LinearLayout>
 
@@ -122,7 +131,7 @@
             android:layout_marginEnd="15dp"
             android:background="@drawable/btn_signup"
             android:backgroundTint="@color/colorPrimary"
-            android:text="Sign Up"
+            android:text="@string/sign_up"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -133,7 +142,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:gravity="center"
-            android:text="SignUp with Phone"
+            android:text="@string/signup_with_phone"
             android:textColor="@color/colorPrimary"
             android:textSize="18sp" />
 

@@ -14,64 +14,70 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 
+//when user logging to already existing account
+
 class SignInActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivitySignInBinding
+    private lateinit var binding: ActivitySignInBinding//view binding
     private lateinit var alertDialog: AlertDialog
     private lateinit var auth: FirebaseAuth
-    private lateinit var mGoogleSignInClient: GoogleSignInClient
+    private lateinit var googleSignInClient: GoogleSignInClient//for sign in via google
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignInBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //removing action bar
         supportActionBar?.hide()
 
-        auth = FirebaseAuth.getInstance()
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
 
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
+
+        auth = FirebaseAuth.getInstance()//getting instance of auth
+
+        //if user is already logged in redirecting him/her to main activity
         if (auth.currentUser != null) {
             val intent = Intent(this@SignInActivity, MainActivity::class.java)
             this.finish()
             startActivity(intent)
         }
 
+        //when user tap on google button
+        binding.btnGoogle.setOnClickListener {
+            Toast.makeText(this, "clicked", Toast.LENGTH_SHORT).show()
+            signIn()
+        }
+
+        //setting alert dialog between sign in/sign up task
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Login")
         builder.setMessage("Logging to Your Account")
 
-        binding.btnGoogle.setOnClickListener {
-            signIn()
-        }
-
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id1))
-            .requestEmail()
-            .build()
-
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
-
+        //when user trying the sign in
         binding.btnSignIn.setOnClickListener {
-            alertDialog = builder.create()
-            alertDialog.setCancelable(false)
-
+            //taking data inputted by user
             val email = binding.etEmail.text.toString()
             val password = binding.etPassword.text.toString()
 
+            //checking inputted data is not null
             if (email.isEmpty() || password.isEmpty()) {
-                if (email.isEmpty()) {
-                    binding.etEmail.error = "Email Id can't be empty"
-                }
-                if (password.isEmpty()) {
-                    binding.etPassword.error = "Password can't be empty"
-                }
+                displayWarning(email, password)
             } else {
-                alertDialog.show()
+                //displaying the alert dialog
+                alertDialog = builder.create()
+                alertDialog.setCancelable(false)
+//                alertDialog.show()
                 signIn(email, password)
             }
         }
 
-        binding.tvSignUp.setOnClickListener {
+        //redirecting user to Sign Up Activity
+        binding.tvRegister.setOnClickListener {
             val intent = Intent(this@SignInActivity, SignUpActivity::class.java)
             this.finish()
             startActivity(intent)
@@ -92,10 +98,24 @@ class SignInActivity : AppCompatActivity() {
         }
     }
 
-    private var RC_SIGN_IN = 65
+    //display warning when any of the field is empty
+    private fun displayWarning(email: String, password: String) {
+        if (email.isEmpty()) {
+            binding.etEmail.error = "Email Id can't be empty"
+        }
+        if (password.isEmpty()) {
+            binding.etPassword.error = "Password can't be empty"
+        }
+    }
+
+    companion object {
+        private const val RC_SIGN_IN = 9001
+    }
 
     private fun signIn() {
-        val signInIntent = mGoogleSignInClient.signInIntent
+        Toast.makeText(this, "function", Toast.LENGTH_SHORT).show()
+        Log.d("checking func", "yeah working")
+        val signInIntent = googleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
 
@@ -124,12 +144,12 @@ class SignInActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d("TAG", "signInWithCredential:success")
-                    val user = auth.currentUser
-//                    updateUI(user)
+//                    val intent = Intent(this@SignInActivity,MainActivity::class.java)
+//                    startActivity(intent)
+//                    this.finish()
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w("TAG", "signInWithCredential:failure", task.exception)
-//                    updateUI(null)
                 }
             }
     }

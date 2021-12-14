@@ -3,12 +3,15 @@ package com.example.whatsappclone.Models
 class Users {
 
     var profilePic: String = ""
-    var userName: String
-    var mail: String
-    var password: String
+    var userName: String = ""
+    var mail: String = ""
+    var password: String = ""
     var userId: String = ""
     var lastMessage: String = ""
 
+    constructor() {
+
+    }
 
     constructor(
         userName: String,

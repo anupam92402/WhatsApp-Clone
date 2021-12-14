@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.example.whatsappclone.Models.Users
 import com.example.whatsappclone.databinding.ActivitySignInBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -13,6 +14,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 //when user logging to already existing account
 
@@ -22,6 +25,7 @@ class SignInActivity : AppCompatActivity() {
     private lateinit var alertDialog: AlertDialog
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient//for sign in via google
+    private lateinit var mDbRef: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,8 +41,11 @@ class SignInActivity : AppCompatActivity() {
             .build()
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
+        googleSignInClient.revokeAccess()
 
         auth = FirebaseAuth.getInstance()//getting instance of auth
+
+        mDbRef = FirebaseDatabase.getInstance().reference
 
         //if user is already logged in redirecting him/her to main activity
         if (auth.currentUser != null) {
@@ -49,7 +56,6 @@ class SignInActivity : AppCompatActivity() {
 
         //when user tap on google button
         binding.btnGoogle.setOnClickListener {
-            Toast.makeText(this, "clicked", Toast.LENGTH_SHORT).show()
             signIn()
         }
 
@@ -71,7 +77,7 @@ class SignInActivity : AppCompatActivity() {
                 //displaying the alert dialog
                 alertDialog = builder.create()
                 alertDialog.setCancelable(false)
-//                alertDialog.show()
+                alertDialog.show()
                 signIn(email, password)
             }
         }
@@ -113,8 +119,6 @@ class SignInActivity : AppCompatActivity() {
     }
 
     private fun signIn() {
-        Toast.makeText(this, "function", Toast.LENGTH_SHORT).show()
-        Log.d("checking func", "yeah working")
         val signInIntent = googleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
@@ -144,9 +148,15 @@ class SignInActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d("TAG", "signInWithCredential:success")
-//                    val intent = Intent(this@SignInActivity,MainActivity::class.java)
-//                    startActivity(intent)
-//                    this.finish()
+                    val currentUser = auth.currentUser!!
+                    val users = Users()
+                    users.userId = currentUser.uid
+                    users.userName = currentUser.displayName!!
+                    users.profilePic = currentUser.photoUrl.toString()
+                    mDbRef.child("Users").child(currentUser.uid).setValue(users)
+                    val intent = Intent(this@SignInActivity, MainActivity::class.java)
+                    startActivity(intent)
+                    this.finish()
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w("TAG", "signInWithCredential:failure", task.exception)

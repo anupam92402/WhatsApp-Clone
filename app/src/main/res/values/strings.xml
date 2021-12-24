@@ -11,6 +11,11 @@
     <string name="sign_up">Sign Up</string>
     <string name="username">Username</string>
     <string name="already_have_an_account">Already have an Account?</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="last_message">Last Message</string>
+    <string name="default_web_client_id1" translatable="false">242278391856-qajsueq4940s69dokb151so00qtihhrn.apps.googleusercontent.com</string>
+    <string name="type_a_message">Type a Message</string>
+    <string name="receiver_message">Receiver Message</string>
+    <string name="_12_00_am">12:00 AM</string>
+    <string name="sender_message">Sender Message</string>
 </resources>

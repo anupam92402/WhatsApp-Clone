@@ -3,17 +3,26 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/projects/WhatsApp Clone/app/src/main/res/drawable/bg_receiver.xml" value="0.2703125" />
+        <entry key="..\:/projects/WhatsApp Clone/app/src/main/res/drawable/bg_sender.xml" value="0.2703125" />
+        <entry key="..\:/projects/WhatsApp Clone/app/src/main/res/drawable/btn_send.xml" value="0.2703125" />
         <entry key="..\:/projects/WhatsApp Clone/app/src/main/res/drawable/btn_signup.xml" value="0.2703125" />
         <entry key="..\:/projects/WhatsApp Clone/app/src/main/res/drawable/facebook_logo.xml" value="0.2703125" />
         <entry key="..\:/projects/WhatsApp Clone/app/src/main/res/drawable/facebooklogo.xml" value="0.2703125" />
         <entry key="..\:/projects/WhatsApp Clone/app/src/main/res/drawable/googlelogo.xml" value="0.2703125" />
+        <entry key="..\:/projects/WhatsApp Clone/app/src/main/res/drawable/ic_call.xml" value="0.2703125" />
         <entry key="..\:/projects/WhatsApp Clone/app/src/main/res/drawable/ic_facebooklogo.xml" value="0.2703125" />
+        <entry key="..\:/projects/WhatsApp Clone/app/src/main/res/drawable/ic_send.xml" value="0.2703125" />
+        <entry key="..\:/projects/WhatsApp Clone/app/src/main/res/layout/activity_chat_detail.xml" value="0.264" />
         <entry key="..\:/projects/WhatsApp Clone/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
         <entry key="..\:/projects/WhatsApp Clone/app/src/main/res/layout/activity_sign_in.xml" value="0.25416666666666665" />
         <entry key="..\:/projects/WhatsApp Clone/app/src/main/res/layout/activity_sign_in_acitivity.xml" value="0.25416666666666665" />
         <entry key="..\:/projects/WhatsApp Clone/app/src/main/res/layout/activity_sign_in_activity.xml" value="0.264" />
         <entry key="..\:/projects/WhatsApp Clone/app/src/main/res/layout/activity_sign_up.xml" value="0.264" />
+        <entry key="..\:/projects/WhatsApp Clone/app/src/main/res/layout/fragment_calls.xml" value="0.25416666666666665" />
         <entry key="..\:/projects/WhatsApp Clone/app/src/main/res/layout/fragment_chats.xml" value="0.21851851851851853" />
+        <entry key="..\:/projects/WhatsApp Clone/app/src/main/res/layout/sample_receiver.xml" value="0.264" />
+        <entry key="..\:/projects/WhatsApp Clone/app/src/main/res/layout/sample_sender.xml" value="0.4" />
         <entry key="..\:/projects/WhatsApp Clone/app/src/main/res/layout/sample_show_user.xml" value="0.264" />
         <entry key="..\:/projects/WhatsApp Clone/app/src/main/res/menu/menu.xml" value="0.25416666666666665" />
       </map>

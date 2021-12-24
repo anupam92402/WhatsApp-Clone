@@ -17,17 +17,18 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
-//when user logging to already existing account
+//when user logging through already existing account
 
 class SignInActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivitySignInBinding//view binding
+    private lateinit var binding: ActivitySignInBinding
     private lateinit var alertDialog: AlertDialog
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient//for sign in via google
     private lateinit var mDbRef: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        //view binding
         super.onCreate(savedInstanceState)
         binding = ActivitySignInBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -35,16 +36,19 @@ class SignInActivity : AppCompatActivity() {
         //removing action bar
         supportActionBar?.hide()
 
+        //google sign in options
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestIdToken(getString(R.string.default_web_client_id1))
             .requestEmail()
             .build()
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
         googleSignInClient.revokeAccess()
 
-        auth = FirebaseAuth.getInstance()//getting instance of auth
+        //getting instance of auth
+        auth = FirebaseAuth.getInstance()
 
+        //getting database reference
         mDbRef = FirebaseDatabase.getInstance().reference
 
         //if user is already logged in redirecting him/her to main activity
@@ -59,7 +63,7 @@ class SignInActivity : AppCompatActivity() {
         builder.setTitle("Login")
         builder.setMessage("Logging to Your Account")
 
-        //when user tap on google button
+        //when user tap on google sign in button
         binding.btnGoogle.setOnClickListener {
             //displaying the alert dialog
             alertDialog = builder.create()
@@ -129,7 +133,7 @@ class SignInActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
+        alertDialog.dismiss()//close the alert dialog
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
@@ -158,7 +162,6 @@ class SignInActivity : AppCompatActivity() {
                     users.userName = currentUser.displayName!!
                     users.profilePic = currentUser.photoUrl.toString()
                     mDbRef.child("Users").child(currentUser.uid).setValue(users)
-                    alertDialog.dismiss()
                     val intent = Intent(this@SignInActivity, MainActivity::class.java)
                     startActivity(intent)
                     this.finish()

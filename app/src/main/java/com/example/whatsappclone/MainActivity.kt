@@ -17,12 +17,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        //view binding
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        auth = FirebaseAuth.getInstance()//getting instance of auth
+        //getting instance of auth
+        auth = FirebaseAuth.getInstance()
 
+        //attaching tab layout with view pager
         binding.viewPager.adapter = FragmentAdapter(supportFragmentManager)
         binding.tabLayout.setupWithViewPager(binding.viewPager)
     }
@@ -44,8 +47,8 @@ class MainActivity : AppCompatActivity() {
                 //logging out user and sending him/her to signup page
                 auth.signOut()
                 val intent = Intent(this@MainActivity, SignUpActivity::class.java)
-                this.finish()
                 startActivity(intent)
+                this.finish()
             }
         }
         return super.onOptionsItemSelected(item)

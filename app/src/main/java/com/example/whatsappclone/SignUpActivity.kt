@@ -15,12 +15,13 @@ import com.google.firebase.database.FirebaseDatabase
 
 class SignUpActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivitySignUpBinding//view binding
+    private lateinit var binding: ActivitySignUpBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var mDbRef: DatabaseReference
     private lateinit var alertDialog: AlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        //view binding
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -28,7 +29,8 @@ class SignUpActivity : AppCompatActivity() {
         //removing action bar
         supportActionBar?.hide()
 
-        auth = FirebaseAuth.getInstance()//getting instance of auth
+        //getting instance of auth
+        auth = FirebaseAuth.getInstance()
 
         //setting alert dialog between sign in/sign up task
         val builder = AlertDialog.Builder(this)

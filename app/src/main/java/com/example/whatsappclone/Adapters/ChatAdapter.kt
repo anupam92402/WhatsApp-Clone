@@ -1,5 +1,7 @@
 package com.example.whatsappclone.Adapters
 
+import android.app.AlertDialog
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,10 +10,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.whatsappclone.Models.MessageModel
 import com.example.whatsappclone.R
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 //sending and receiving messages adapter
 
-class ChatAdapter(private val messageList: ArrayList<MessageModel>) :
+class ChatAdapter(
+    private val messageList: ArrayList<MessageModel>,
+    val context: Context,
+    val recvId: String
+) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val senderViewType = 1
@@ -32,6 +39,23 @@ class ChatAdapter(private val messageList: ArrayList<MessageModel>) :
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val currentMessageModel = messageList[position]
+
+        holder.itemView.setOnLongClickListener {
+            AlertDialog.Builder(context)
+                .setTitle("Delete")
+                .setMessage("Are you sure , you want to delete the message")
+                .setPositiveButton("Yes") { dialogInterface, which ->
+                    val mDBRef = FirebaseDatabase.getInstance().reference
+                    val senderRoom = FirebaseAuth.getInstance()
+                    mDBRef.child("chats")
+                        .child(currentMessageModel.messageId)
+                        .setValue(null)
+                }.setNegativeButton("No") { dialogInterface, which ->
+                    dialogInterface.dismiss()
+                }.show()
+            false
+        }
+
         if (holder.javaClass == SenderViewHolder::class.java) {
             val viewHolder = holder as SenderViewHolder
             holder.senderMessage.text = currentMessageModel.message

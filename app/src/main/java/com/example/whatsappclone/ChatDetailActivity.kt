@@ -69,7 +69,7 @@ class ChatDetailActivity : AppCompatActivity() {
         }
 
         //chat recycler view adapter
-        chatAdapter = ChatAdapter(messageList)
+        chatAdapter = ChatAdapter(messageList, this, receiverId!!)
         binding.chatRecyclerView.adapter = chatAdapter
         binding.chatRecyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -80,6 +80,7 @@ class ChatDetailActivity : AppCompatActivity() {
                     messageList.clear()//clearing old data
                     for (postSnapshot in snapshot.children) {
                         val model = postSnapshot.getValue(MessageModel::class.java)
+                        model?.messageId = snapshot.key!!
                         messageList.add(model!!)
                     }
                     chatAdapter.notifyDataSetChanged()

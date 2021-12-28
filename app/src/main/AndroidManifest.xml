@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WhatsAppClone">
         <activity
+            android:name=".SettingsActivity"
+            android:exported="true" />
+        <activity
             android:name=".GroupChatActivity"
             android:exported="true" />
         <activity

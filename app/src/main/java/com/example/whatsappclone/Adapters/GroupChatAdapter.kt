@@ -1,7 +1,6 @@
 package com.example.whatsappclone.Adapters
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,7 +44,6 @@ class GroupChatAdapter(private val messageList: ArrayList<MessageModel>, val con
             val viewHolder = holder as GroupReceiverViewHolder
             holder.receiverMessage.text = currentMessageModel.message
             getUserName(currentMessageModel)
-            Log.d("TAG1", "username:- $username")
             holder.receiverName.text = username
             val colorArray = context.resources.getIntArray(R.array.random_color)
             val color = colorArray[position % 14]
@@ -62,11 +60,10 @@ class GroupChatAdapter(private val messageList: ArrayList<MessageModel>, val con
                     val user = dataSnapShot.getValue(Users::class.java)
 
                     if (model.uid.equals(user?.userId)) {
-                        Log.d("TAG2", "username:- ${user?.userName}")
                         username = user?.userName
-                        Log.d("TAG3", "username:- $username")
                         break
                     }
+                    notifyDataSetChanged()
                 }
             }
 

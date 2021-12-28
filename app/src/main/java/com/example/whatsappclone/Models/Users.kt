@@ -8,10 +8,9 @@ class Users {
     var password: String = ""
     var userId: String = ""
     var lastMessage: String = ""
+    var about: String = ""
 
-    constructor() {
-
-    }
+    constructor()
 
     constructor(
         userName: String,

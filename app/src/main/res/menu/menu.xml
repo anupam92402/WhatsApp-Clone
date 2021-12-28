@@ -3,9 +3,13 @@
 
     <item
         android:id="@+id/settings"
-        android:title="Settings" />
+        android:title="@string/settings" />
+    <item
+        android:id="@+id/grpchat"
+        android:title="@string/group_chat" />
+
     <item
         android:id="@+id/logout"
-        android:title="Logout" />
+        android:title="@string/logout" />
 
 </menu>

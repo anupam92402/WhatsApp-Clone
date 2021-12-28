@@ -17,9 +17,11 @@ class Users {
         userName: String,
         mail: String,
         password: String,
+        uid: String
     ) {
         this.userName = userName
         this.mail = mail
         this.password = password
+        this.userId = uid
     }
 }

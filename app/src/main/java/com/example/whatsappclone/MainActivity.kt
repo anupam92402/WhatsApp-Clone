@@ -43,6 +43,11 @@ class MainActivity : AppCompatActivity() {
 
             R.id.settings -> Toast.makeText(this, "Settings Clicked", Toast.LENGTH_SHORT).show()
 
+            R.id.grpchat -> {
+                val intent = Intent(this@MainActivity, GroupChatActivity::class.java)
+                startActivity(intent)
+            }
+
             R.id.logout -> {
                 //logging out user and sending him/her to signup page
                 auth.signOut()

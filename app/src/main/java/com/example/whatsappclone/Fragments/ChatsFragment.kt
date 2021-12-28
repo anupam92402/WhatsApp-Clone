@@ -13,13 +13,14 @@ import com.example.whatsappclone.databinding.FragmentChatsBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
+//display all the users signed up with app
 
 class ChatsFragment : Fragment() {
 
     private lateinit var binding: FragmentChatsBinding
-    private var list = ArrayList<Users>()
+    private var userList = ArrayList<Users>()
     private lateinit var mDbRef: DatabaseReference
-    private lateinit var adapter: UserAdapter
+    private lateinit var userAdapter: UserAdapter
     private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
@@ -33,15 +34,15 @@ class ChatsFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
 
         //setting recycler view
-        adapter = UserAdapter(list, requireContext())
-        binding.chatRecyclerView.adapter = adapter
+        userAdapter = UserAdapter(userList, requireContext())
+        binding.chatRecyclerView.adapter = userAdapter
         binding.chatRecyclerView.layoutManager = LinearLayoutManager(context)
 
-        //getting users from firebase
+        //getting all users from firebase
         mDbRef = FirebaseDatabase.getInstance().reference
         mDbRef.child("Users").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                list.clear()//clear old data
+                userList.clear()//clear old data
                 for (dataSnapShot in snapshot.children) {
                     val user = dataSnapShot.getValue(Users::class.java)
                     user?.userId = dataSnapShot.key.toString()
@@ -49,11 +50,10 @@ class ChatsFragment : Fragment() {
                     if (auth.currentUser?.uid == user?.userId) {
                         continue
                     }
-                    list.add(user!!)
+                    userList.add(user!!)
                 }
-                adapter.notifyDataSetChanged()
+                userAdapter.notifyDataSetChanged()
             }
-
 
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(context, "Error:- ${error.message}", Toast.LENGTH_SHORT).show()
@@ -62,7 +62,5 @@ class ChatsFragment : Fragment() {
         })
         return binding.root
     }
-
-
 }
 

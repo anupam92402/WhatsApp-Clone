@@ -2,6 +2,7 @@ package com.example.whatsappclone
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.whatsappclone.Adapters.ChatAdapter
@@ -12,6 +13,8 @@ import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 import java.util.*
 import kotlin.collections.ArrayList
+
+//conversation between two users
 
 class ChatDetailActivity : AppCompatActivity() {
 
@@ -40,8 +43,9 @@ class ChatDetailActivity : AppCompatActivity() {
 
         messageList = ArrayList()
 
-        val senderId = auth.currentUser?.uid//sender Id
-        val receiverId = intent.getStringExtra("userId")//receiver Id
+        val senderId = auth.currentUser?.uid//sender Id (current signed in user)
+        val receiverId =
+            intent.getStringExtra("userId")//receiver Id (to person which user sending messages)
 
         senderRoom = senderId + receiverId
         receiverRoom = receiverId + senderId
@@ -50,7 +54,7 @@ class ChatDetailActivity : AppCompatActivity() {
         val userName = intent.getStringExtra("userName")
         val profilePic = intent.getStringExtra("profilePic")
 
-        //putting intent extra values in views
+        //attaching intent extra values in views
         binding.username.text = userName
         if (!profilePic.equals("")) {
             Picasso.get().load(profilePic).placeholder(R.drawable.defaultprofile)
@@ -65,14 +69,15 @@ class ChatDetailActivity : AppCompatActivity() {
         }
 
         //chat recycler view adapter
-        chatAdapter = ChatAdapter(messageList, this)
+        chatAdapter = ChatAdapter(messageList)
         binding.chatRecyclerView.adapter = chatAdapter
         binding.chatRecyclerView.layoutManager = LinearLayoutManager(this)
 
+        //getting chats from firebase and attaching it recycler view by updating message array list
         mDbRef.child("chats")
             .child(senderRoom!!).addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    messageList.clear()
+                    messageList.clear()//clearing old data
                     for (postSnapshot in snapshot.children) {
                         val model = postSnapshot.getValue(MessageModel::class.java)
                         messageList.add(model!!)
@@ -81,7 +86,11 @@ class ChatDetailActivity : AppCompatActivity() {
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-
+                    Toast.makeText(
+                        applicationContext,
+                        "Error:- ${error.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
             })
@@ -91,9 +100,9 @@ class ChatDetailActivity : AppCompatActivity() {
 
             val message = binding.etMessage.text.toString()
             val model = MessageModel(senderId!!, message)
-
             model.timeStamp = Date().time
-            binding.etMessage.setText("")
+
+            binding.etMessage.setText("")//once user send message clear edit text
 
             if (message.trim().isNotEmpty()) {
                 mDbRef.child("chats").child(senderRoom!!).push()

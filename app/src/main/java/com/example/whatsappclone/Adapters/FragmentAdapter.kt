@@ -7,6 +7,8 @@ import com.example.whatsappclone.Fragments.CallsFragment
 import com.example.whatsappclone.Fragments.ChatsFragment
 import com.example.whatsappclone.Fragments.StatusFragment
 
+//view pager adapter
+
 class FragmentAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {
 
     //total number of fragments

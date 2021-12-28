@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WhatsAppClone">
         <activity
+            android:name=".GroupChatActivity"
+            android:exported="true" />
+        <activity
             android:name=".ChatDetailActivity"
             android:exported="true" />
         <activity
@@ -26,7 +29,7 @@
             android:exported="true" />
         <activity
             android:name=".MainActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
     </application>
 
 </manifest>

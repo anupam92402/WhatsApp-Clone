@@ -11,14 +11,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.whatsappclone.ChatDetailActivity
 import com.example.whatsappclone.Models.Users
 import com.example.whatsappclone.R
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.squareup.picasso.Picasso
 
-//adapter class of displaying user
+//adapter class to display user
 
 class UserAdapter(private val usersList: ArrayList<Users>, private val context: Context) :
     RecyclerView.Adapter<UserAdapter.ViewHolder>() {
 
-    //inflating layout file
+    //inflating sample show user layout file
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.sample_show_user, parent, false)
@@ -29,12 +34,36 @@ class UserAdapter(private val usersList: ArrayList<Users>, private val context: 
         //getting current user from array list
         val currentUser = usersList[position]
         holder.username.text = currentUser.userName
-//        holder.lastMessage.text = currentUser.lastMessage
         if (!currentUser.profilePic.equals("")) {
             Picasso.get().load(currentUser.profilePic).placeholder(R.drawable.defaultprofile)
                 .into(holder.image)
         }
-        //on Click listener on layout
+
+        FirebaseDatabase.getInstance().reference.child("chats")
+            .child(FirebaseAuth.getInstance().uid + currentUser.userId)
+            .orderByChild("timestamp")
+            .limitToLast(1)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.hasChildren()) {
+                        for (dataSnapShot in snapshot.children) {
+                            holder.lastMessage.text =
+                                dataSnapShot.child("message").getValue().toString()
+                        }
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+
+            })
+
+        if (holder.lastMessage.text.equals("Last Message")) {
+            holder.lastMessage.text = ""
+        }
+
+        //on Click listener on layout when user tap on any other user
         holder.itemView.setOnClickListener {
             val intent = Intent(context, ChatDetailActivity::class.java)
             intent.putExtra("userId", currentUser.userId)
